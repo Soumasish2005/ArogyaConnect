@@ -428,16 +428,16 @@ Create a new medicine shop account.
   "phone": "1234567890",
   "medicinesAvailable": [
     { 
-      name: "paracetemol"
-      manufacturer: "ABC"
-      price: 69
-      stock: 32
+      "name": "paracetemol",
+      "manufacturer": "ABC",
+      "price": "69",
+      "stock": "32"
     },
     { 
-      name: "Mohak-Thong-fixer"
-      manufacturer: ""
-      price: 69
-      stock: 69
+      "name": "Mohak-Thong-fixer",
+      "manufacturer": "",
+      "price": "69",
+      "stock": "69"
     }         
   ]
 }
