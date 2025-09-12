@@ -2,6 +2,8 @@ import userModel  from "../models/user.models.js";
 import userServices from "../services/user.service.js";
 import { validationResult } from "express-validator";
 import blackListTokenModel  from "../models/blackListToken.model.js";
+import DoctorModel from "../models/doctor.model.js";
+import HospitalModel from "../models/hospital.model.js";
 
 
 const registerUser = async (req, res, next) => {
@@ -65,9 +67,53 @@ const logoutUser = async (req, res, next) => {
     res.status(200).json({ message: "Logged out successfully" });
 }
 
+const getDoctors = async (req, res, next) => {
+    try {
+        const doctors = await DoctorModel.find();
+        if (!doctors || doctors.length === 0) {
+            return res.status(200).json({ message: "No doctors found.", doctors: [] });
+        }
+        res.status(200).json({ doctors });
+    } catch (error) {
+        console.error("Error fetching doctors:", error);
+        res.status(500).json({ message: 'Server Error' });
+    }
+}
+
+const getHospitals = async (req, res, next) => {
+    try {
+        const hospitals = await HospitalModel.find();
+        if (!hospitals || hospitals.length === 0) {
+            return res.status(200).json({ message: "No hospitals found.", hospitals: [] });
+        }
+        res.status(200).json({ hospitals });
+    } catch (error) {
+        console.error("Error fetching hospitals:", error);
+        res.status(500).json({ message: 'Server Error' });
+    }
+}
+
+const getDoctorByCategory = async (req, res, next) => {
+    const { category } = req.params;
+    try {
+        const doctors = await DoctorModel.find();
+        const filteredDoctors = doctors.filter(doctor => doctor.specialization.indexOf(category) !== -1);
+        if (!filteredDoctors || filteredDoctors.length === 0) {
+            return res.status(200).json({ message: `No doctors found in the category: ${category}.`, doctors: [] });
+        }
+        res.status(200).json({ doctors: filteredDoctors });
+    } catch (error) {
+        console.error(`Error fetching doctors in category ${category}:`, error);
+        res.status(500).json({ message: 'Server Error' });
+    }
+};
+
 export default {
     registerUser,
     loginUser,
     getUserProfile,
-    logoutUser
+    logoutUser,
+    getDoctors,
+    getHospitals,
+    getDoctorByCategory,
 };

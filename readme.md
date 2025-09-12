@@ -201,6 +201,150 @@ Logout the current user and invalidate the token.
 ```
 Status Code: 401
 
+### 5. Get All Doctors
+Get a list of all doctors in the system.
+
+**Endpoint:** `GET /user/getDoctors`
+
+**Authentication Required:** Yes (User Token)
+
+**Success Response:** (Status: 200)
+```json
+{
+  "doctors": [
+    {
+      "_id": "60d5f484f1b2c8b1f8e4e1a1",
+      "name": "Dr. John Smith",
+      "email": "doctor@example.com",
+      "specialization": ["Cardiology", "Internal Medicine"],
+      "phone": 1234567890,
+      "feesPerConsultation": 500,
+      "rating": 4.5,
+      "experience": ["5 years at City Hospital"]
+    },
+    {
+      "_id": "60d5f484f1b2c8b1f8e4e1a2",
+      "name": "Dr. Sarah Johnson",
+      "email": "sarah@example.com",
+      "specialization": ["Dermatology"],
+      "phone": 9876543210,
+      "feesPerConsultation": 400,
+      "rating": 4.8
+    }
+  ]
+}
+```
+
+**No Doctors Response:** (Status: 200)
+```json
+{
+  "message": "No doctors found.",
+  "doctors": []
+}
+```
+
+**Error Response:**
+```json
+{
+  "message": "Authentication required"
+}
+```
+Status Code: 401
+
+### 6. Get All Hospitals
+Get a list of all hospitals in the system.
+
+**Endpoint:** `GET /user/getHospitals`
+
+**Authentication Required:** Yes (User Token)
+
+**Success Response:** (Status: 200)
+```json
+{
+  "hospitals": [
+    {
+      "_id": "60d5f484f1b2c8b1f8e4e1a3",
+      "name": "City General Hospital",
+      "email": "hospital@example.com",
+      "address": {
+        "location": "456 Hospital Street",
+        "city": "New York",
+        "state": "NY",
+        "zipCode": "10002",
+        "country": "USA"
+      },
+      "phoneNumber": "1234567890",
+      "beds": {
+        "totalBeds": 500,
+        "availableBeds": 150
+      },
+      "specialities": ["Emergency", "Cardiology", "Neurology"],
+      "rating": 4.7
+    }
+  ]
+}
+```
+
+**No Hospitals Response:** (Status: 200)
+```json
+{
+  "message": "No hospitals found.",
+  "hospitals": []
+}
+```
+
+**Error Response:**
+```json
+{
+  "message": "Authentication required"
+}
+```
+Status Code: 401
+
+### 7. Get Doctors by Category
+Get doctors filtered by specialization category.
+
+**Endpoint:** `GET /user/getDoctorByCategory/:category`
+
+**Authentication Required:** Yes (User Token)
+
+**URL Parameters:**
+- `category`: The specialization category to filter by (e.g., "Cardiology", "Dermatology", "Neurology")
+
+**Success Response:** (Status: 200)
+```json
+{
+  "doctors": [
+    {
+      "_id": "60d5f484f1b2c8b1f8e4e1a1",
+      "name": "Dr. John Smith",
+      "email": "doctor@example.com",
+      "specialization": ["Cardiology", "Internal Medicine"],
+      "phone": 1234567890,
+      "feesPerConsultation": 500,
+      "rating": 4.5,
+      "experience": ["5 years at City Hospital"]
+    }
+  ]
+}
+```
+
+**No Doctors in Category Response:** (Status: 200)
+```json
+{
+  "message": "No doctors found in the category: Cardiology.",
+  "doctors": []
+}
+```
+
+**Error Response:**
+```json
+{
+  "message": "Authentication required"
+}
+```
+Status Code: 401
+
 ---
 
 ## Doctor Endpoints

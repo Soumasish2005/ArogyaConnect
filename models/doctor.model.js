@@ -18,7 +18,8 @@ const doctorSchema = mongoose.Schema({
     },
     specialization: {
         type: [String],
-        required: true
+        required: true,
+        default: []
     },
     phone: {
         type: Number,

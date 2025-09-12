@@ -20,5 +20,10 @@ router.get('/profile', authUser , userController.getUserProfile);;
 
 router.get('/logout', authUser, userController.logoutUser);
 
+router.get('/getDoctors' , authUser, userController.getDoctors);
+
+router.get('/getHospitals' , authUser, userController.getHospitals);
+
+router.get('/getDoctorByCategory/:category', authUser, userController.getDoctorByCategory);
 
 export default router;
