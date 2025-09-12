@@ -69,7 +69,7 @@ const doctorSchema = mongoose.Schema({
         {
             hospitalId: {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "hospital",
+                ref: "Hospital",
                 default:null
             }
         }

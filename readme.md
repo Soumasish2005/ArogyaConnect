@@ -921,6 +921,188 @@ Status Code: 401
 
 ---
 
+## Connection Endpoints
+
+These endpoints manage connections between hospitals and doctors.
+
+### 1. Create Connection Request (Hospital to Doctor)
+Hospitals can send connection requests to doctors.
+
+**Endpoint:** `POST /hospital/request`
+
+**Authentication Required:** Yes (Hospital Token)
+
+**Request Body:**
+```json
+{
+  "doctorId": "60d5f484f1b2c8b1f8e4e1a1"
+}
+```
+
+**Validation Rules:**
+- Doctor ID is required and must be a valid ObjectId
+
+**Success Response:** (Status: 201)
+```json
+{
+  "message": "Connection request sent successfully.",
+  "request": {
+    "_id": "60d5f484f1b2c8b1f8e4e1a2",
+    "hospital": "60d5f484f1b2c8b1f8e4e1a3",
+    "doctor": "60d5f484f1b2c8b1f8e4e1a1",
+    "status": "pending",
+    "createdAt": "2025-09-12T10:30:00.000Z"
+  }
+}
+```
+
+**Error Responses:**
+- **Doctor Not Found** (Status: 404)
+```json
+{
+  "message": "Doctor not found."
+}
+```
+- **Already Connected** (Status: 400)
+```json
+{
+  "message": "This doctor is already connected to your hospital."
+}
+```
+- **Request Already Exists** (Status: 400)
+```json
+{
+  "message": "A connection request for this doctor is already pending."
+}
+```
+
+### 2. Get Pending Requests (Doctor)
+Doctors can view all pending connection requests from hospitals.
+
+**Endpoint:** `GET /doctor/request/pending/:doctorId`
+
+**Authentication Required:** Yes (Doctor Token)
+
+**URL Parameters:**
+- `doctorId`: The ID of the doctor to get pending requests for
+
+**Success Response:** (Status: 200)
+```json
+{
+  "requests": [
+    {
+      "_id": "60d5f484f1b2c8b1f8e4e1a2",
+      "hospital": {
+        "_id": "60d5f484f1b2c8b1f8e4e1a3",
+        "name": "City General Hospital",
+        "address": {
+          "city": "New York",
+          "state": "NY"
+        },
+        "specialities": ["Emergency", "Cardiology"]
+      },
+      "doctor": "60d5f484f1b2c8b1f8e4e1a1",
+      "status": "pending",
+      "createdAt": "2025-09-12T10:30:00.000Z"
+    }
+  ]
+}
+```
+
+**No Requests Response:** (Status: 200)
+```json
+{
+  "message": "No pending requests found.",
+  "requests": []
+}
+```
+
+**Error Response:**
+```json
+{
+  "message": "Authentication required"
+}
+```
+Status Code: 401
+
+### 3. Respond to Connection Request (Doctor)
+Doctors can approve or decline connection requests from hospitals.
+
+**Endpoint:** `PATCH /doctor/request/respond/:reqId`
+
+**Authentication Required:** Yes (Doctor Token)
+
+**URL Parameters:**
+- `reqId`: The ID of the connection request
+
+**Request Body:**
+```json
+{
+  "decision": "approve"
+}
+```
+
+**Validation Rules:**
+- Decision must be either "approve" or "decline"
+
+**Success Response - Approved:** (Status: 200)
+```json
+{
+  "message": "Request approved. You are now connected to the hospital."
+}
+```
+
+**Success Response - Declined:** (Status: 200)
+```json
+{
+  "message": "Request declined successfully."
+}
+```
+
+**Error Responses:**
+- **Invalid Decision** (Status: 400)
+```json
+{
+  "message": "Invalid decision. Must be \"approve\" or \"decline\"."
+}
+```
+- **Request Not Found** (Status: 404)
+```json
+{
+  "message": "Request not found."
+}
+```
+- **Unauthorized** (Status: 403)
+```json
+{
+  "message": "Forbidden: You are not authorized to respond to this request."
+}
+```
+- **Already Processed** (Status: 400)
+```json
+{
+  "message": "This request has already been approved."
+}
+```
+
+## Connection Flow
+
+1. **Hospital** sends a connection request to a **Doctor** using `POST /hospital/request`
+2. **Doctor** views pending requests using `GET /doctor/request/pending/:doctorId`
+3. **Doctor** responds to a specific request using `PATCH /doctor/request/respond/:reqId`
+4. If approved, the doctor and hospital are now connected and can collaborate
+5. Processed requests (approved/declined) are automatically removed from the system
+
+## Connection Rules
+
+- A hospital can only send one request per doctor (prevents spam)
+- Only the target doctor can respond to their own requests
+- Once a request is approved/declined, it is automatically deleted from the system
+- Approved connections automatically update both hospital and doctor records
+- Declined requests are simply removed without creating a connection
+
+---
+
 ## Common Error Responses
 
 ### Validation Errors

@@ -58,7 +58,7 @@ const hospitalSchema = mongoose.Schema({
     doctors: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "doctor",
+            ref: "Doctor",
             required: true
         }
     ],
@@ -154,5 +154,5 @@ hospitalSchema.statics.hashPassword = async function (password) {
     return await bcrypt.hash(password, 10);
 }
 
-const hospitalModel = mongoose.model('hospital', hospitalSchema);
-export default hospitalModel;       
+const hospitalModel = mongoose.model('Hospital', hospitalSchema);
+export default hospitalModel;

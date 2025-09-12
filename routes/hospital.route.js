@@ -3,7 +3,7 @@ import { body } from 'express-validator';
 const router = express.Router();
 import { authHospital } from '../middlewares/auth.middleware.js';
 import hospitalController from '../controllers/hospital.controller.js';
-
+import connectionController from '../controllers/connection.controller.js';
 
 router.post('/register', [
     body('name').notEmpty().withMessage('Name is required'),
@@ -32,6 +32,8 @@ router.post('/login', [
 router.get('/profile', authHospital, hospitalController.getHospitalProfile);
 
 router.get('/logout', authHospital, hospitalController.logoutHospital);
+
+router.post('/request' , authHospital, connectionController.createRequest);
 
 
 

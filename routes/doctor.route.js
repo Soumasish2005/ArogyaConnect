@@ -1,7 +1,10 @@
 import express from 'express';
 const router = express.Router();
 import { body } from 'express-validator';
+
 import doctorController from '../controllers/doctor.controller.js';
+import connectionController from '../controllers/connection.controller.js';
+
 import { authDoctor } from '../middlewares/auth.middleware.js';
 
 router.post('/register', [
@@ -18,9 +21,12 @@ router.post('/login', [
     body('password').isLength({ min: 6 }).withMessage('Password must be 6 characters long')
 ], doctorController.loginDoctor);
 
-
 router.get('/profile', authDoctor, doctorController.getDoctorProfile);
 
 router.get('/logout', authDoctor, doctorController.logoutDoctor);
+
+router.get('/request/pending/:doctorId' , authDoctor, connectionController.getPendingRequests);
+
+router.patch('/request/respond/:reqId' , authDoctor, connectionController.respondToRequest);
 
 export default router;      
