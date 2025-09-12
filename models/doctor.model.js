@@ -74,15 +74,18 @@ const doctorSchema = mongoose.Schema({
             }
         }
     ],
-    appointments: {
-        Date:{
-            type:Date,
-            TimeRanges: {
+    appointments: [
+        {
+            date: {
+                type: Date,
+                required: true
+            },
+            timeRanges: {
                 type: [String],
                 default: []
             }
         }
-    }
+    ]
 }, { timestamps: true });
 
 doctorSchema.methods.generateAuthToken = function(){
