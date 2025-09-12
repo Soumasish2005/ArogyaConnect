@@ -3,7 +3,7 @@ import doctorModel  from "../models/doctor.model.js";
 import jwt from "jsonwebtoken";
 import blackListTokenModel  from "../models/blackListToken.model.js";
 import medicineShopModel from "../models/medicineShop.model.js";
-
+import hospitalModel from "../models/hospital.model.js";
 
 export const authUser = async (req, res, next) => {
     const token = req.headers.authorization?.split(" ")[1] || req.cookies.token;
@@ -63,6 +63,30 @@ export const authMedicalShop = async (req, res, next) => {
         const medicineShop = await medicineShopModel.findOne({ _id: decode._id });
         if (medicineShop.email) {
             req.medicineShop = medicineShop;
+            req.token = token;
+            return next();
+        }
+        return res.status(401).json({ message: "Unauthorized" });
+    } catch (err) {
+        return res.status(401).json({ message: "Unauthorized" });
+    }
+};
+
+
+export const authHospital = async (req, res, next) => {
+    const token = req.headers.authorization?.split(" ")[1] || req.cookies.token;
+    if (!token) {
+        return res.status(401).json({ message: "Unauthorized" });
+    }
+    const isBlackedListed = await blackListTokenModel.findOne({ token });
+    if (isBlackedListed) {
+        return res.status(401).json({ message: "Unauthorized" });
+    }
+    try {
+        const decode = jwt.verify(token, process.env.JWT_SECRET);
+        const hospital = await hospitalModel.findOne({ _id: decode._id });
+        if (hospital.email) {
+            req.hospital = hospital;
             req.token = token;
             return next();
         }

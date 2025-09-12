@@ -19,10 +19,13 @@ connectDB();
 import userRoute from './routes/user.routes.js';
 import doctorRoute from './routes/doctor.route.js';
 import medicineShopRoute from './routes/medicineShop.route.js';
+import hospitalRoute from './routes/hospital.route.js';
+
 
 app.use("/doctor", doctorRoute);
 app.use("/medicineShop", medicineShopRoute);
 app.use("/user", userRoute);
+app.use("/hospital", hospitalRoute);
 
 app.get('/health', (req, res) => {
   res.send('API is healthy, running on port ' + PORT);

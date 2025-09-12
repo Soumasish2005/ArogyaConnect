@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import bcrypt from "bcrypt";
+import * as bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 const hospitalSchema = mongoose.Schema({
@@ -72,10 +72,6 @@ const hospitalSchema = mongoose.Schema({
         max: 5,
         default: 0
     },
-    numOfReviews: {
-        type: Number,
-        default: 0
-    },
     reviews: [
         {
             user: {
@@ -89,21 +85,22 @@ const hospitalSchema = mongoose.Schema({
             },
         }
     ],
-    availableBeds: {
-        type: Number,
-        default: 0,
-        min: 0
-    },
-    totalBeds: {
-        type: Number,
-        default: 0,
-        min: 0
+    beds: {
+        availableBeds: {
+            type: Number,
+            min: 1,
+            required: true
+        },
+        totalBeds: {
+            type: Number,
+            min: 1,
+            required: true
+        },
     },
     establishedAt: {
         type: Date,
         default: Date.now
     },
-    
     servicesOffered: {
         type: [String],
         default: ["General"]
@@ -124,22 +121,37 @@ const hospitalSchema = mongoose.Schema({
         type: Boolean,
         default: false
     },
-    paymentMethods:{
+    paymentMethods: {
         type: [String],
-        default: ["Cash", "Credit Card", "Insurance"]   
+        default: ["Cash", "Credit Card", "Insurance"]
+    },
+    password: {
+        type: String,
+        required: true,
+        minlength: [6, "Password must contains at least 6 characters"],
+        select: false
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        match: [
+            /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+            "Please add a valid email"
+        ]
     }
 });
 
-hospitalSchema.methods.generateAuthToken = function(){
+hospitalSchema.methods.generateAuthToken = function () {
     const token = jwt.sign({ _id: this._id }, process.env.JWT_SECRET);
     return token;
 }
-hospitalSchema.methods.comparePassword = async function(password){
+hospitalSchema.methods.comparePassword = async function (password) {
     const isEqual = await bcrypt.compare(password, this.password);
     return isEqual;
 }
 hospitalSchema.statics.hashPassword = async function (password) {
-  return await bcrypt.hash(password, 10);
+    return await bcrypt.hash(password, 10);
 }
 
 const hospitalModel = mongoose.model('hospital', hospitalSchema);
