@@ -81,6 +81,10 @@ const medicineShopSchema = mongoose.Schema({
                 type: String,
                 required: true
             },
+            imgUrl:{
+                type: String,
+                default: ""
+            },
             manufacturer: {
                 type: String,
                 default: ""
@@ -91,6 +95,10 @@ const medicineShopSchema = mongoose.Schema({
             },
             stock: {
                 type: Number,
+                required: true
+            },
+            expiryDate: {
+                type: Date,
                 required: true
             }
         }

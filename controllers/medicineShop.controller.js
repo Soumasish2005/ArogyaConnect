@@ -72,9 +72,33 @@ const logoutMedicineShop = async (req, res, next) => {
     res.status(200).json({ message: "Logged out successfully" });
 }
 
+const addMedicine = async (req, res, next) => {
+    const errs = validationResult(req);
+    if (!errs.isEmpty()) {
+        return res.status(400).json({ errors: errs.array() });
+    }
+    const { name, manufacturer, price, stock, expiryDate, imageUrl } = req.body;
+    const medicineShop = req.medicineShop;
+
+    medicineShop.medicinesAvailable.push({
+        name,
+        manufacturer,
+        price,
+        stock,
+        expiryDate,
+        imgUrl: imageUrl || ""
+    });
+
+    await medicineShop.save();
+
+    res.status(200).json({ message: "Medicine added successfully", medicinesAvailable: medicineShop.medicinesAvailable });
+};
+
+
 export default {
     registerMedicineShop,
     loginMedicineShop,
     getMedicineShopProfile,
-    logoutMedicineShop
+    logoutMedicineShop,
+    addMedicine,
 }

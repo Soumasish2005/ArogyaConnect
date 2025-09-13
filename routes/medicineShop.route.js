@@ -29,4 +29,12 @@ router.get('/profile', authMedicalShop, medicineShopController.getMedicineShopPr
 
 router.get('/logout', authMedicalShop, medicineShopController.logoutMedicineShop);
 
+router.post('/addMedicine', authMedicalShop, [
+    body('name').isLength({ min: 1 }).withMessage('Medicine name is required'),
+    body('price').isFloat({ min: 0 }).withMessage('Price must be a positive number'),
+    body('stock').isInt({ min: 1 }).withMessage('Stock must be a positive integer'),
+    body('expiryDate').isISO8601().toDate().withMessage('Invalid expiry date'),
+], medicineShopController.addMedicine);
+
+
 export default router;
