@@ -26,6 +26,11 @@ router.get('/getHospitals' , authUser, userController.getHospitals);
 
 router.get('/getDoctorByCategory/:category', authUser, userController.getDoctorByCategory);
 
+router.get('/getMedicineShops', authUser, userController.getMedicineShops);
+
+router.get('/getMedicineInShop/:name', authUser, userController.getMedicineByName);
+
+// router.get('/getHospitalsByCity/:city', authUser, userController.getHospitalsByCity);
 
 
 export default router;

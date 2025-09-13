@@ -4,7 +4,7 @@ import { validationResult } from "express-validator";
 import blackListTokenModel  from "../models/blackListToken.model.js";
 import DoctorModel from "../models/doctor.model.js";
 import HospitalModel from "../models/hospital.model.js";
-
+import medicineShopModel from "../models/medicineShop.model.js";
 
 const registerUser = async (req, res, next) => {
     const err = validationResult(req);
@@ -108,6 +108,26 @@ const getDoctorByCategory = async (req, res, next) => {
     }
 };
 
+const getMedicineByName = async (req, res, next) => {
+    const { name } = req.params;
+    try {
+
+        const allMedicineShops = await medicineShopModel.find();
+        const medicineShopsWithMedicine = allMedicineShops.filter(shop =>
+            shop.medicinesAvailable.some((medicine => medicine.name.toLowerCase() === name.toLowerCase()) && medicine.stock > 0)
+        );
+
+        if (medicineShopsWithMedicine.length === 0) {
+            return res.status(200).json({ message: `No shops found with the medicine: ${name}.`, shops: [] });
+        }
+
+        res.status(200).json({ shops: medicineShopsWithMedicine });
+    } catch (error) {
+        console.error(`Error fetching medicine by name ${name}:`, error);
+        res.status(500).json({ message: 'Server Error' });
+    }
+};
+
 export default {
     registerUser,
     loginUser,
@@ -116,4 +136,5 @@ export default {
     getDoctors,
     getHospitals,
     getDoctorByCategory,
+    getMedicineByName,
 };
