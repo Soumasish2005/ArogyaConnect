@@ -1,10 +1,10 @@
 import { View, Text, StyleSheet } from "react-native";
 
-export default function DoctorDashboard() {
+export default function AppointmentsScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Doctor Dashboard</Text>
-      <Text>Welcome to your dashboard 👨‍⚕️</Text>
+      <Text style={styles.title}>Appointments</Text>
+      <Text>Here you’ll see all your appointments.</Text>
     </View>
   );
 }
