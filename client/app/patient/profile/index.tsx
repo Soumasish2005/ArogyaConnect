@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from "rea
 import { AuthContext } from "../../../context/AuthContext";
 import { getUserProfile } from "../../../lib/api/userApi";
 import { useNavigation } from "expo-router";
+import { Ionicons,MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function ProfileScreen() {
   const [profile, setProfile] = useState<any>(null);

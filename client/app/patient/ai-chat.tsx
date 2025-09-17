@@ -1,10 +1,10 @@
 import { View, Text, StyleSheet } from "react-native";
 
-export default function AppointmentsScreen() {
+export default function AIChatScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Appointments</Text>
-      <Text style={styles.text}>Your upcoming and past appointments will show here.</Text>
+      <Text style={styles.title}>Chat</Text>
+      <Text style={styles.text}>Page</Text>
     </View>
   );
 }
