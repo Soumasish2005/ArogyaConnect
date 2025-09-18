@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "client",
+    "name": "ArogyaConnect",
     "slug": "client",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -39,7 +39,8 @@
             "backgroundColor": "#000000"
           }
         }
-      ]
+      ],
+      "expo-localization"
     ],
     "experiments": {
       "typedRoutes": true,

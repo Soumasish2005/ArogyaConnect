@@ -8,7 +8,8 @@ import {
   ActivityIndicator,
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { getDoctors } from "../../lib/api/userApi"; // 👈 make sure path is correct
+import { getDoctors } from "../../lib/api/userApi"; 
+import { useTranslation } from "react-i18next";
 
 export default function ConsultationsScreen() {
   const [currentStep, setCurrentStep] = useState(0);
@@ -17,6 +18,7 @@ export default function ConsultationsScreen() {
   const [selectedDoctor, setSelectedDoctor] = useState<any>(null);
   const [date, setDate] = useState<Date>(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const { t } = useTranslation();
 
   // Fetch doctors on mount
   useEffect(() => {
@@ -34,14 +36,13 @@ export default function ConsultationsScreen() {
     fetchDoctors();
   }, []);
 
-  const steps = ["Choose your Doctor", "Date and Time", "Confirm & Pay"];
+  const steps = [t("user-chooseDoctor"), t("user-dateTime"), t("user-confirmPay")];
 
   const handleConfirm = () => {
     console.log("Confirmed Appointment:", {
       doctor: selectedDoctor,
       date,
     });
-    // 🔗 Here you could call API to schedule appointment
   };
 
   return (
@@ -72,7 +73,7 @@ export default function ConsultationsScreen() {
       <View style={styles.content}>
         {currentStep === 0 && (
           <View>
-            <Text style={styles.sectionTitle}>Available Doctors</Text>
+            <Text style={styles.sectionTitle}>{t('user-listDocs')}</Text>
             {loading ? (
               <ActivityIndicator size="large" color="#007AFF" />
             ) : (

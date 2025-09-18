@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { AuthContext } from "../../context/AuthContext";
+import LanguageDropdown from "@/components/LanguageToggle";
 
 export default function SettingsScreen() {
   const { logout } = useContext(AuthContext);
@@ -47,6 +48,8 @@ export default function SettingsScreen() {
           <Ionicons name="moon-outline" size={22} color="#333" />
           <Text style={styles.itemText}>Dark Mode</Text>
         </TouchableOpacity>
+
+        <LanguageDropdown />
 
         <TouchableOpacity style={styles.item}>
           <Ionicons name="notifications-outline" size={22} color="#333" />

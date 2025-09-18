@@ -1,8 +1,10 @@
 import { Tabs } from "expo-router";
 import { Ionicons,MaterialCommunityIcons } from "@expo/vector-icons";
 import { View, Text, Image } from "react-native";
+import { useTranslation } from "react-i18next";
 
 export default function PatientLayout() {
+  const { t } = useTranslation();
   return (
     <Tabs
       screenOptions={{
@@ -18,10 +20,10 @@ export default function PatientLayout() {
               <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Image
                 source={require("../../assets/images/icon.png")} // put your logo path
-                style={{ width: 28, height: 28, marginRight: 16 }}
+                style={{ width: 54, height: 54, marginRight: 10 }}
                 resizeMode="contain"
               />
-              <Text style={{ fontSize: 18, fontWeight: "bold" }}>ArogyaConnect</Text>
+              <Text style={{ fontSize: 18, fontWeight: "bold" }}>{t('title')}</Text>
             </View>
           ),
           tabBarIcon: ({ color, size }) => (
@@ -36,10 +38,10 @@ export default function PatientLayout() {
               <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Image
                 source={require("../../assets/images/icon.png")} // put your logo path
-                style={{ width: 28, height: 28, marginRight: 16 }}
+                style={{ width: 54, height: 54, marginRight: 10 }}
                 resizeMode="contain"
               />
-              <Text style={{ fontSize: 18, fontWeight: "bold" }}>Book Consultation</Text>
+              <Text style={{ fontSize: 18, fontWeight: "bold" }}>{t('consultations')}</Text>
             </View>
           ),
           tabBarIcon: ({ color, size }) => (
@@ -54,10 +56,10 @@ export default function PatientLayout() {
               <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Image
                 source={require("../../assets/images/icon.png")} // put your logo path
-                style={{ width: 28, height: 28, marginRight: 16 }}
+                style={{ width: 54, height: 54, marginRight: 10 }}
                 resizeMode="contain"
               />
-              <Text style={{ fontSize: 18, fontWeight: "bold" }}>Pharmacies</Text>
+              <Text style={{ fontSize: 18, fontWeight: "bold" }}>{t('pharmacies')}</Text>
             </View>
           ),
           tabBarIcon: ({ color, size }) => (
@@ -72,10 +74,10 @@ export default function PatientLayout() {
               <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Image
                 source={require("../../assets/images/icon.png")} // put your logo path
-                style={{ width: 28, height: 28, marginRight: 16 }}
+                style={{ width: 54, height: 54, marginRight: 10 }}
                 resizeMode="contain"
               />
-              <Text style={{ fontSize: 18, fontWeight: "bold" }}>AI Checker</Text>
+              <Text style={{ fontSize: 18, fontWeight: "bold" }}>{t('ai-symptom-checker')}</Text>
             </View>
           ),
           tabBarIcon: ({ color, size }) => (

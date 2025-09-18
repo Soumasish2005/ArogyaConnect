@@ -4,11 +4,12 @@ import { AuthContext } from "../../../context/AuthContext";
 import { getUserProfile } from "../../../lib/api/userApi";
 import { useNavigation } from "expo-router";
 import { Ionicons,MaterialCommunityIcons } from "@expo/vector-icons";
-
+import { useTranslation } from "react-i18next";
 export default function ProfileScreen() {
   const [profile, setProfile] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
+  const { t } = useTranslation();
 
   useEffect(() => {
     navigation.setOptions({
@@ -48,15 +49,15 @@ export default function ProfileScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>My Profile</Text>
+      <Text style={styles.title}>{t('profileTitle')}</Text>
 
       {profile ? (
         <>
-          <Text style={styles.text}>Name: {profile.user.fullName?.firstName + " " + profile.user?.fullName?.lastName }</Text>
-          <Text style={styles.text}>Email: {profile.user.email}</Text>
+          <Text style={styles.text}>{t('name')}: {profile.user.fullName?.firstName + " " + profile.user?.fullName?.lastName }</Text>
+          <Text style={styles.text}>{t('email')}: {profile.user.email}</Text>
         </>
       ) : (
-        <Text style={styles.text}>No profile data available.</Text>
+        <Text style={styles.text}>{t('profileNoData')}</Text>
       )}
 
     </View>

@@ -7,24 +7,25 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
+import { useTranslation } from "react-i18next";
 import { Ionicons,MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function DashboardScreen() {
+  const { t } = useTranslation();
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       {/* Hero Section */}
       <View style={styles.hero}>
-        <Text style={styles.welcome}>Affordable Telemedicine for Everyone</Text>
-        <Text style={styles.subtitle}>Consult doctors in your language, access records offline, and get real-time updates from local pharmacies.</Text>
+        <Text style={styles.welcome}>{t('user-welcome')}</Text>
+        <Text style={styles.subtitle}>{t('user-subtitle')}</Text>
         <View style={styles.quickActionButtons}>
           <TouchableOpacity style={styles.consultButton}>
-            <Text style={styles.cbText}>Book a Consultation</Text>
+            <Text style={styles.cbText}>{t('user-consultation')}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.chkSymptomsButton}>
-            <Text style={styles.csText}>Check Symptoms</Text>
+            <Text style={styles.csText}>{t('user-chkSym')}</Text>
           </TouchableOpacity>
         </View>
-        
       </View>
 
       {/* Banner Image */}
@@ -36,35 +37,35 @@ export default function DashboardScreen() {
 
       
       <View style={styles.features}>
-        <Text style={styles.featuresTitle}>Choose your desired sevice</Text>
-        <Text style={styles.featuresSubtitle}>Our services are designed specifically for rural communities with limited connectivity and resources</Text>
+        <Text style={styles.featuresTitle}>{t('user-serviceTitle')}</Text>
+        <Text style={styles.featuresSubtitle}>{t('user-serviceSubtitle')}</Text>
         <View style={styles.actions}>
           <TouchableOpacity style={styles.card}>
             <Ionicons name="videocam" size={28} color="#007AFF" />
-            <Text style={styles.cardText}>Multilingual Consultations</Text>
-            <Text style={styles.cardDesc}>Connect with doctors in your preferred language via video or voice.</Text>
-            <Text style={styles.cardLnk}>Click to schedule a consultation.</Text>
+            <Text style={styles.cardText}>{t('user-consultCardTitle')}</Text>
+            <Text style={styles.cardDesc}>{t('user-consultCardDesc')}</Text>
+            <Text style={styles.cardLnk}>{t('user-consultCardBtn')}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.card}>
             <MaterialCommunityIcons name="pill" size={28} color="#007AFF" />
-            <Text style={styles.cardText}>Pharmacy updates</Text>
-            <Text style={styles.cardDesc}>Track real-time medicine availability at local stores near you.</Text>
-            <Text style={styles.cardLnk}>Find pharmacies.</Text>
+            <Text style={styles.cardText}>{t('user-pharmaCardTitle')}</Text>
+            <Text style={styles.cardDesc}>{t('user-pharmaCardDesc')}</Text>
+            <Text style={styles.cardLnk}>{t('user-pharmaCardBtn')}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.card}>
             <MaterialCommunityIcons name="robot-outline" size={28} color="#007AFF" />
-            <Text style={styles.cardText}>AI Symptom Checker</Text>
-            <Text style={styles.cardDesc}>Get instant AI-driven health guidance,even on low bandwidth.</Text>
-            <Text style={styles.cardLnk}>Check symptoms.</Text>
+            <Text style={styles.cardText}>{t('user-sympCardTitle')}</Text>
+            <Text style={styles.cardDesc}>{t('user-sympCardDesc')}</Text>
+            <Text style={styles.cardLnk}>{t('user-sympCardBtn')}</Text>
           </TouchableOpacity>
         </View>
       </View>
 
       {/* Upcoming Appointments */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Upcoming Appointments</Text>
+      <View style={styles.features}>
+        <Text style={styles.featuresTitle}>{t('user-upcomingAppoint')}</Text>
         <View style={styles.cardRow}>
           <Ionicons name="medkit-outline" size={24} color="#007AFF" />
           <Text style={styles.rowText}>Dr. Smith - 20th Sept, 10:00 AM</Text>
@@ -76,16 +77,16 @@ export default function DashboardScreen() {
       </View>
 
       {/* Health Tips */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Health Tips</Text>
+      <View style={styles.features}>
+        <Text style={styles.featuresTitle}>{t('user-healthTips')}</Text>
         <View style={styles.tipCard}>
           <Text style={styles.tipText}>
-            💧 Drink at least 2 liters of water daily to stay hydrated.
+            💧 {t('user-tip1')}
           </Text>
         </View>
         <View style={styles.tipCard}>
           <Text style={styles.tipText}>
-            🏃‍♂️ Do 30 minutes of exercise every day to maintain fitness.
+            🏃‍♂️ {t('user-tip2')}
           </Text>
         </View>
       </View>
@@ -162,12 +163,12 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   cbText: { 
-    fontSize: 14, 
+    fontSize: 12, 
     fontWeight: "900", 
     color: "#fff"
   },
   csText: {
-    fontSize: 14, 
+    fontSize: 12, 
     fontWeight: "400", 
     color: "blue"
   },
